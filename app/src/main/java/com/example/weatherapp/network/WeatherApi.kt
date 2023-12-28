@@ -12,7 +12,7 @@ interface WeatherApi {
     @GET("/geo/1.0/direct")
     suspend fun getGeocoding(
         @Query("q") location: String,
-        @Query("limit") limit: String,
+        @Query("limit") limit: Int,
         @Query("appid") appId: String
     ) : Response<Geocoding>
 
