@@ -3,12 +3,14 @@ package com.example.weatherapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.example.weatherapp.databinding.ActivityMainBinding
 import com.example.weatherapp.network.RetrofitHelper
 import com.example.weatherapp.network.WeatherApi
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -55,6 +57,22 @@ class MainActivity : AppCompatActivity() {
 //                currentWeatherLabel.text = currentWeather.body()?.weather?.first()?.main ?: ""
 //                forecastLabel.text = forecast.body()?.list?.first()?.weather?.first()?.description ?: ""
             }
+            prepareViewPager()
         }
+    }
+
+    private fun prepareViewPager() {
+        val fragmentList = arrayListOf(
+            WeatherFragment.newInstance(),
+            ForecastFragment.newInstance()
+        )
+        val tabTitleArray = arrayOf("Weather", "Forecast")
+
+        viewPager.adapter = ViewPagerAdapter(this, fragmentList)
+
+        TabLayoutMediator(tabLayout, viewPager) {
+            tab, position ->
+            tab.text = tabTitleArray[position]
+        }.attach()
     }
 }
