@@ -3,30 +3,33 @@ package com.example.weatherapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.widget.ViewPager2
+import com.example.weatherapp.databinding.ActivityMainBinding
 import com.example.weatherapp.network.RetrofitHelper
 import com.example.weatherapp.network.WeatherApi
+import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var locationLabel : TextView
-    private lateinit var currentWeatherLabel : TextView
-    private lateinit var forecastLabel : TextView
+    private lateinit var tabLayout : TabLayout
+    private lateinit var viewPager : ViewPager2
+
+    private lateinit var binding : ActivityMainBinding
 
     private val appId = "e6bc672f315ea264a8e0e568a6376e50"
 
     private val retrofitClient = RetrofitHelper.getInstance().create(WeatherApi::class.java)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        locationLabel = findViewById(R.id.locationLabel)
-        currentWeatherLabel = findViewById(R.id.currentWeatherLabel)
-        forecastLabel = findViewById(R.id.forecastLabel)
+        tabLayout = binding.tabLayout
+        viewPager = binding.viewPager
 
         lifecycleScope.launch(Dispatchers.IO) {
 
@@ -48,9 +51,9 @@ class MainActivity : AppCompatActivity() {
             Log.d("testingRetrofit", "forecast ---> ${forecast.body()}")
 
             withContext(Dispatchers.Main) {
-                locationLabel.text = "Location: ${result.body()?.first()?.name ?: ""}"
-                currentWeatherLabel.text = currentWeather.body()?.weather?.first()?.main ?: ""
-                forecastLabel.text = forecast.body()?.list?.first()?.weather?.first()?.description ?: ""
+//                locationLabel.text = "Location: ${result.body()?.first()?.name ?: ""}"
+//                currentWeatherLabel.text = currentWeather.body()?.weather?.first()?.main ?: ""
+//                forecastLabel.text = forecast.body()?.list?.first()?.weather?.first()?.description ?: ""
             }
         }
     }
