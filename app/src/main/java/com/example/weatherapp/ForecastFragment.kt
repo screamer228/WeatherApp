@@ -17,6 +17,6 @@ class ForecastFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() = ForecastFragment
+        fun newInstance() = ForecastFragment()
     }
 }

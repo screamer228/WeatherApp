@@ -57,8 +57,8 @@ class MainActivity : AppCompatActivity() {
 //                currentWeatherLabel.text = currentWeather.body()?.weather?.first()?.main ?: ""
 //                forecastLabel.text = forecast.body()?.list?.first()?.weather?.first()?.description ?: ""
             }
-            prepareViewPager()
         }
+        prepareViewPager()
     }
 
     private fun prepareViewPager() {
