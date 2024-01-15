@@ -6,9 +6,8 @@
     tools:context=".ForecastFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/forecastFragment_recyclerView"
+        android:id="@+id/forecastRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
 
 </FrameLayout>

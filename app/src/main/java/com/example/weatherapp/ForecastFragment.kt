@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.weatherapp.databinding.FragmentForecastBinding
+import com.example.weatherapp.model.forecast.ForecastResult
 
 class ForecastFragment : Fragment() {
 
@@ -29,7 +29,7 @@ class ForecastFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
-        binding?.forecastFragmentRecyclerView?.layoutManager = layoutManager
+        binding?.forecastRecycler?.layoutManager = layoutManager
         val forecastResultList = listOf<ForecastResult>(
             ForecastResult("testDate", "testTemp", "testDescription", "testMain"),
             ForecastResult("testDate2", "testTemp2", "testDescription2", "testMain2"),
@@ -42,7 +42,7 @@ class ForecastFragment : Fragment() {
             ForecastResult("testDate2", "testTemp2", "testDescription2", "testMain2")
         )
         adapter = ForecastAdapter(requireContext(), forecastResultList)
-        binding?.forecastFragmentRecyclerView?.adapter = adapter
+        binding?.forecastRecycler?.adapter = adapter
     }
 
     companion object {

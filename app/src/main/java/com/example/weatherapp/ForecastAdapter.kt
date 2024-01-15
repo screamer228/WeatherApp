@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.databinding.ItemForecastBinding
+import com.example.weatherapp.model.forecast.ForecastResult
 
 class ForecastAdapter(private val fragmentContext: Context, private val forecastList: List<ForecastResult>)
     : RecyclerView.Adapter<ForecastAdapter.ViewHolder>() {
