@@ -3,6 +3,7 @@ package com.example.weatherapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
@@ -14,6 +15,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.math.floor
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch(Dispatchers.IO) {
 
-            val result = retrofitClient.getGeocoding("London", 1, appId)
+            val result = retrofitClient.getGeocoding("Rostov_on_Don", 1, appId)
 
             val latResult = result.body()?.first()?.lat ?: 0.0
             val lonResult = result.body()?.first()?.lon ?: 0.0
@@ -53,12 +55,21 @@ class MainActivity : AppCompatActivity() {
             Log.d("testingRetrofit", "forecast ---> ${forecast.body()}")
 
             withContext(Dispatchers.Main) {
+                showToast(currentWeather.body()?.main?.temp.toString() ?: "")
+
 //                locationLabel.text = "Location: ${result.body()?.first()?.name ?: ""}"
 //                currentWeatherLabel.text = currentWeather.body()?.weather?.first()?.main ?: ""
 //                forecastLabel.text = forecast.body()?.list?.first()?.weather?.first()?.description ?: ""
             }
         }
         prepareViewPager()
+    }
+
+    private fun showToast(message: String) {
+        val messageResult = floor(message.toDouble() * 10) / 10
+        val duration = Toast.LENGTH_SHORT // или Toast.LENGTH_LONG для длительного отображения
+        val toast = Toast.makeText(applicationContext, messageResult.toString(), duration)
+        toast.show()
     }
 
     private fun prepareViewPager() {
