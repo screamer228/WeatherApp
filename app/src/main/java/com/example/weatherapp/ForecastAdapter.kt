@@ -13,8 +13,9 @@ class ForecastAdapter(private val fragmentContext: Context, private val forecast
         class ViewHolder(private val binding: ItemForecastBinding, private val context: Context)
             : RecyclerView.ViewHolder(binding.root){
                 fun bindItem(forecast: ForecastResult){
+                    binding.itemRecyclerDate.text = "Date: ${forecast.date}"
                     binding.itemRecyclerTemp.text = "Temp: ${forecast.temp}"
-                    binding.itemRecyclerDescription.text = "Temp: ${forecast.description}"
+                    binding.itemRecyclerDescription.text = forecast.description
                 }
             }
 

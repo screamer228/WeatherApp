@@ -27,14 +27,14 @@
             android:padding="24dp">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/weatherFragment_image"
+                android:id="@+id/weather_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/ic_launcher_background" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/weatherFragment_temp_value_tv"
+                android:id="@+id/weather_temp_value_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -43,11 +43,11 @@
                 android:textSize="50sp" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/weatherFragment_Precipitation_value_tv"
+                android:id="@+id/weather_description_value_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Precipitation"
+                android:text="Description"
                 android:textAlignment="center"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -72,13 +72,14 @@
                 android:padding="10dp">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/weatherFragment_humidity_value_tv"
+                    android:id="@+id/weather_humidity_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="50"
                     android:textSize="25sp"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/weather_humidity_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_launcher_background"
@@ -100,13 +101,14 @@
                 android:padding="10dp">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/weatherFragment_windSpeed_value_tv"
+                    android:id="@+id/weather_windSpeed_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="50"
                     android:textSize="25sp"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/weather_windSpeed_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_launcher_background"
@@ -128,13 +130,14 @@
                 android:padding="10dp">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/weatherFragment_pressure_value_tv"
+                    android:id="@+id/weather_pressure_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="50"
                     android:textSize="25sp"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/weather_pressure_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_launcher_background"

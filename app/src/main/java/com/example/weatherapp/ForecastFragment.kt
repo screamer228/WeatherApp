@@ -5,17 +5,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.databinding.FragmentForecastBinding
 import com.example.weatherapp.model.forecast.ForecastResult
+import com.example.weatherapp.viewmodel.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ForecastFragment : Fragment() {
 
     private var _binding: FragmentForecastBinding? = null
     private val binding get() = _binding
 
-    private lateinit var recyclerView: RecyclerView
+    private val mainViewModel : MainViewModel by activityViewModels()
+
     private lateinit var adapter: ForecastAdapter
 
     override fun onCreateView(
@@ -30,19 +36,22 @@ class ForecastFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
         binding?.forecastRecycler?.layoutManager = layoutManager
-        val forecastResultList = listOf<ForecastResult>(
-            ForecastResult("testDate", "testTemp", "testDescription", "testMain"),
-            ForecastResult("testDate2", "testTemp2", "testDescription2", "testMain2"),
-            ForecastResult("testDate3", "testTemp3", "testDescription3", "testMain3"),
-            ForecastResult("testDate2", "testTemp2", "testDescription2", "testMain2"),
-            ForecastResult("testDate2", "testTemp2", "testDescription2", "testMain2"),
-            ForecastResult("testDate2", "testTemp2", "testDescription2", "testMain2"),
-            ForecastResult("testDate2", "testTemp2", "testDescription2", "testMain2"),
-            ForecastResult("testDate2", "testTemp2", "testDescription2", "testMain2"),
-            ForecastResult("testDate2", "testTemp2", "testDescription2", "testMain2")
-        )
-        adapter = ForecastAdapter(requireContext(), forecastResultList)
-        binding?.forecastRecycler?.adapter = adapter
+
+        mainViewModel.forecastResult.observe(viewLifecycleOwner, Observer {
+            val forecastResultList = mutableListOf<ForecastResult>()
+            it.list.forEach{
+                forecastResultList.add(
+                    ForecastResult(
+                        date = it.dt_txt,
+                        temp = it.main.temp.toString(),
+                        description = it.weather.first().description,
+                        main = it.weather.first().main
+                    )
+                )
+            }
+            adapter = ForecastAdapter(requireContext(), forecastResultList)
+            binding?.forecastRecycler?.adapter = adapter
+        })
     }
 
     companion object {

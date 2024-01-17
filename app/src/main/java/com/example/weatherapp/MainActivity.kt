@@ -4,29 +4,33 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.example.weatherapp.databinding.ActivityMainBinding
 import com.example.weatherapp.network.RetrofitHelper
 import com.example.weatherapp.network.WeatherApi
+import com.example.weatherapp.viewmodel.MainViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.math.floor
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private val mainViewModel: MainViewModel by viewModels()
 
     private lateinit var tabLayout : TabLayout
     private lateinit var viewPager : ViewPager2
 
     private lateinit var binding : ActivityMainBinding
 
-    private val appId = "e6bc672f315ea264a8e0e568a6376e50"
-
-    private val retrofitClient = RetrofitHelper.getInstance().create(WeatherApi::class.java)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -35,33 +39,17 @@ class MainActivity : AppCompatActivity() {
         tabLayout = binding.tabLayout
         viewPager = binding.viewPager
 
-        lifecycleScope.launch(Dispatchers.IO) {
-
-            val result = retrofitClient.getGeocoding("Rostov_on_Don", 1, appId)
-
-            val latResult = result.body()?.first()?.lat ?: 0.0
-            val lonResult = result.body()?.first()?.lon ?: 0.0
-
-            val currentWeather = retrofitClient.getCurrentWeather(latResult, lonResult, appId, "metric")
-
-            val forecast = retrofitClient.getForecast(latResult, lonResult, appId, "metric")
-
-            Log.d("testingRetrofit", "geocoding ---> ${result.errorBody()}")
-            Log.d("testingRetrofit", "geocoding ---> ${result.message()}")
-            Log.d("testingRetrofit", "geocoding ---> ${result.body()}")
-            Log.d("testingRetrofit", "currentWeather ---> ${currentWeather.body()}")
-            Log.d("testingRetrofit", "currentWeather ---> ${currentWeather.isSuccessful}")
-            Log.d("testingRetrofit", "forecast ---> ${forecast.message()}")
-            Log.d("testingRetrofit", "forecast ---> ${forecast.body()}")
-
-            withContext(Dispatchers.Main) {
-                showToast(currentWeather.body()?.main?.temp.toString() ?: "")
-
-//                locationLabel.text = "Location: ${result.body()?.first()?.name ?: ""}"
-//                currentWeatherLabel.text = currentWeather.body()?.weather?.first()?.main ?: ""
-//                forecastLabel.text = forecast.body()?.list?.first()?.weather?.first()?.description ?: ""
-            }
+        lifecycleScope.launch(Dispatchers.Main) {
+            mainViewModel.getCoordinates("Rostov-on-Don")
         }
+
+        mainViewModel.coordinatesResult.observe(this, Observer {
+            lifecycleScope.launch(Dispatchers.Main) {
+                mainViewModel.getCurrentWeather(it.lat, it.lon)
+                mainViewModel.getForecast(it.lat, it.lon)
+            }
+        })
+
         prepareViewPager()
     }
 
