@@ -71,6 +71,11 @@ class WeatherRepositoryImpl @Inject constructor(
         const val LIMIT = 1
         const val APP_ID = "e6bc672f315ea264a8e0e568a6376e50"
         const val METRIC = "metric"
+        const val WEATHER_TYPE_CLEAR = "Clear"
+        const val WEATHER_TYPE_CLOUDS = "Clouds"
+        const val WEATHER_TYPE_RAIN = "Drizzle"
+        const val WEATHER_TYPE_SNOW = "Snow"
+        const val WEATHER_TYPE_THUNDERSTORM = "Thunderstorm"
 
     }
 }

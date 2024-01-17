@@ -44,7 +44,7 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/weather_description_value_tv"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Description"
@@ -62,29 +62,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:padding="16dp">
 
             <LinearLayout
+                android:id="@+id/linearLayout_humidity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center"
-                android:padding="10dp">
+                android:gravity="center">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/weather_humidity_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="50"
-                    android:textSize="25sp"/>
+                    android:textSize="22sp"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/weather_humidity_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:src="@drawable/humidity"
+                    android:layout_marginVertical="4dp"/>
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -94,55 +94,54 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearLayout_windSpeed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:padding="10dp">
+                android:paddingHorizontal="40dp">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/weather_windSpeed_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="50"
-                    android:textSize="25sp"/>
+                    android:textSize="22sp" />
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/weather_windSpeed_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_marginVertical="4dp"
+                    android:src="@drawable/wind_speed" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Wind speed"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearLayout_pressure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center"
-                android:padding="10dp">
+                android:gravity="center">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/weather_pressure_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="50"
-                    android:textSize="25sp"/>
+                    android:textSize="22sp"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/weather_pressure_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:src="@drawable/pressure"
+                    android:layout_marginVertical="4dp"/>
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
