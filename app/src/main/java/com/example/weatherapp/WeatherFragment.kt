@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import com.example.weatherapp.databinding.FragmentWeatherBinding
 import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_CLEAR
 import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_CLOUDS
+import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_DRIZZLE
 import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_RAIN
 import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_SNOW
 import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_THUNDERSTORM
@@ -39,7 +40,8 @@ class WeatherFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mainViewModel.currentWeatherResult.observe(viewLifecycleOwner, Observer {
-            binding?.weatherTempValueTv?.text = it.temp.toString()
+            val truncatedNumber = String.format("%.1f", it.temp)
+            binding?.weatherTempValueTv?.text = "$truncatedNumber \u2103"
             binding?.weatherDescriptionValueTv?.text = it.description
             binding?.weatherHumidityValueTv?.text = "${it.humidity} %"
             binding?.weatherWindSpeedValueTv?.text = "${it.windSpeed} m/s"
@@ -62,7 +64,7 @@ class WeatherFragment : Fragment() {
                         )
                     )
                 }
-                WEATHER_TYPE_RAIN -> {
+                WEATHER_TYPE_RAIN, WEATHER_TYPE_DRIZZLE -> {
                     binding?.weatherImage?.setImageDrawable(
                         ContextCompat.getDrawable(
                             requireContext(),

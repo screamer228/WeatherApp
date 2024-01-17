@@ -3,9 +3,18 @@ package com.example.weatherapp
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.databinding.ItemForecastBinding
 import com.example.weatherapp.model.forecast.ForecastResult
+import com.example.weatherapp.repository.WeatherRepositoryImpl
+import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_CLEAR
+import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_CLOUDS
+import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_DRIZZLE
+import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_RAIN
+import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_SNOW
+import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_THUNDERSTORM
 
 class ForecastAdapter(private val fragmentContext: Context, private val forecastList: List<ForecastResult>)
     : RecyclerView.Adapter<ForecastAdapter.ViewHolder>() {
@@ -14,8 +23,59 @@ class ForecastAdapter(private val fragmentContext: Context, private val forecast
             : RecyclerView.ViewHolder(binding.root){
                 fun bindItem(forecast: ForecastResult){
                     binding.itemRecyclerDate.text = "Date: ${forecast.date}"
-                    binding.itemRecyclerTemp.text = "Temp: ${forecast.temp}"
+                    val truncatedNumber = String.format("%.1f", forecast.temp.toDouble())
+                    binding.itemRecyclerTemp.text = "Temp: $truncatedNumber \u2103"
                     binding.itemRecyclerDescription.text = forecast.description
+                    when (forecast.main) {
+                        WEATHER_TYPE_CLEAR -> {
+                            binding.itemRecyclerImage.setImageDrawable(
+                                ContextCompat.getDrawable(
+                                    context,
+                                    R.drawable.clear_sky
+                                )
+                            )
+                        }
+                        WEATHER_TYPE_CLOUDS -> {
+                            binding.itemRecyclerImage.setImageDrawable(
+                                ContextCompat.getDrawable(
+                                    context,
+                                    R.drawable.clouds
+                                )
+                            )
+                        }
+                        WEATHER_TYPE_RAIN, WEATHER_TYPE_DRIZZLE -> {
+                            binding.itemRecyclerImage.setImageDrawable(
+                                ContextCompat.getDrawable(
+                                    context,
+                                    R.drawable.rain
+                                )
+                            )
+                        }
+                        WEATHER_TYPE_SNOW -> {
+                            binding.itemRecyclerImage.setImageDrawable(
+                                ContextCompat.getDrawable(
+                                    context,
+                                    R.drawable.snow
+                                )
+                            )
+                        }
+                        WEATHER_TYPE_THUNDERSTORM -> {
+                            binding.itemRecyclerImage.setImageDrawable(
+                                ContextCompat.getDrawable(
+                                    context,
+                                    R.drawable.thunderstorm
+                                )
+                            )
+                        }
+                        else -> {
+                            binding.itemRecyclerImage.setImageDrawable(
+                                ContextCompat.getDrawable(
+                                    context,
+                                    R.drawable.fog
+                                )
+                            )
+                        }
+                    }
                 }
             }
 
