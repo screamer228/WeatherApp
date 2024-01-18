@@ -7,6 +7,7 @@ import com.example.weatherapp.model.currentweather.CurrentWeather
 import com.example.weatherapp.model.currentweather.WeatherResult
 import com.example.weatherapp.model.forecast.Coord
 import com.example.weatherapp.model.forecast.FiveDayForecast
+import com.example.weatherapp.repository.PrefsRepository
 import com.example.weatherapp.repository.WeatherRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +15,8 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val weatherRepository: WeatherRepository
+class MainViewModel @Inject constructor(private val weatherRepository: WeatherRepository,
+    private val prefsRepository : PrefsRepository
 ) : ViewModel(){
 
     private val coordinates: MutableLiveData<Coord> = MutableLiveData()
@@ -25,6 +27,14 @@ class MainViewModel @Inject constructor(private val weatherRepository: WeatherRe
 
     private val forecast: MutableLiveData<FiveDayForecast> = MutableLiveData()
     val forecastResult: LiveData<FiveDayForecast> = forecast
+
+    fun getCityFromPrefs() : String{
+        return prefsRepository.getCity()
+    }
+
+    fun saveDataInPrefs(key: String, value: String){
+        prefsRepository.saveDataInPrefs(key, value)
+    }
 
     suspend fun getCoordinates(city: String){
         withContext(Dispatchers.IO){
