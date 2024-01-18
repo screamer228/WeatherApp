@@ -53,7 +53,7 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:4.9.0")
     //coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
     implementation ("androidx.lifecycle:lifecycle-extensions:2.2.0")
 

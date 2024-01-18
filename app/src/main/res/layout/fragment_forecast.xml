@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     tools:context=".ForecastFragment">
 
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/forecast_progressIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/forecastRecycler"
         android:layout_width="match_parent"

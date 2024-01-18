@@ -37,13 +37,16 @@ class ForecastFragment : Fragment() {
         val layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
         binding?.forecastRecycler?.layoutManager = layoutManager
 
+        binding?.forecastRecycler?.visibility = View.INVISIBLE
+        binding?.forecastProgressIndicator?.visibility = View.VISIBLE
+
         mainViewModel.forecastResult.observe(viewLifecycleOwner, Observer {
             val forecastResultList = mutableListOf<ForecastResult>()
             it.list.forEach{
                 forecastResultList.add(
                     ForecastResult(
                         date = it.dt_txt,
-                        temp = it.main.temp.toString(),
+                        temp = it.main.temp,
                         description = it.weather.first().description,
                         main = it.weather.first().main
                     )
@@ -51,6 +54,9 @@ class ForecastFragment : Fragment() {
             }
             adapter = ForecastAdapter(requireContext(), forecastResultList)
             binding?.forecastRecycler?.adapter = adapter
+
+            binding?.forecastProgressIndicator?.visibility = View.GONE
+            binding?.forecastRecycler?.visibility = View.VISIBLE
         })
     }
 

@@ -5,6 +5,9 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
@@ -39,12 +42,16 @@ class WeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding?.linearLayoutMain?.visibility = INVISIBLE
+        binding?.weatherProgressIndicator?.visibility = VISIBLE
+
         mainViewModel.currentWeatherResult.observe(viewLifecycleOwner, Observer {
-            val truncatedNumber = String.format("%.1f", it.temp)
-            binding?.weatherTempValueTv?.text = "$truncatedNumber \u2103"
+            val outputTemp = String.format("%.1f", it.temp)
+            val outputWindSpeed = String.format("%.1f", it.windSpeed)
+            binding?.weatherTempValueTv?.text = "$outputTemp \u2103"
             binding?.weatherDescriptionValueTv?.text = it.description
             binding?.weatherHumidityValueTv?.text = "${it.humidity} %"
-            binding?.weatherWindSpeedValueTv?.text = "${it.windSpeed} m/s"
+            binding?.weatherWindSpeedValueTv?.text = "$outputWindSpeed m/s"
             binding?.weatherPressureValueTv?.text = it.pressure.toString()
 
             when (it.main) {
@@ -97,6 +104,8 @@ class WeatherFragment : Fragment() {
                     )
                 }
             }
+            binding?.weatherProgressIndicator?.visibility = GONE
+            binding?.linearLayoutMain?.visibility = VISIBLE
         })
     }
 

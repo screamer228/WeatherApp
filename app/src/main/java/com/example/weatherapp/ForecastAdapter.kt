@@ -15,6 +15,8 @@ import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER
 import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_RAIN
 import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_SNOW
 import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_THUNDERSTORM
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class ForecastAdapter(private val fragmentContext: Context, private val forecastList: List<ForecastResult>)
     : RecyclerView.Adapter<ForecastAdapter.ViewHolder>() {
@@ -22,9 +24,15 @@ class ForecastAdapter(private val fragmentContext: Context, private val forecast
         class ViewHolder(private val binding: ItemForecastBinding, private val context: Context)
             : RecyclerView.ViewHolder(binding.root){
                 fun bindItem(forecast: ForecastResult){
-                    binding.itemRecyclerDate.text = "Date: ${forecast.date}"
-                    val truncatedNumber = String.format("%.1f", forecast.temp.toDouble())
-                    binding.itemRecyclerTemp.text = "Temp: $truncatedNumber \u2103"
+                    val inputDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                    val outputDateFormat = SimpleDateFormat("d MMMM HH:mm", Locale.getDefault())
+
+                    val date = inputDateFormat.parse(forecast.date)
+                    val outputDate = date?.let { outputDateFormat.format(it) }
+
+                    val outputTemp = String.format("%.1f", forecast.temp)
+                    binding.itemRecyclerDate.text = "$outputDate"
+                    binding.itemRecyclerTemp.text = "$outputTemp \u2103"
                     binding.itemRecyclerDescription.text = forecast.description
                     when (forecast.main) {
                         WEATHER_TYPE_CLEAR -> {
