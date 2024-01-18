@@ -59,20 +59,17 @@ class MainActivity : AppCompatActivity() {
         //loading from SharedPrefs
         inputField.editText?.setText(mainViewModel.getCityFromPrefs())
         inputField.editText?.clearFocus()
-        lifecycleScope.launch(Dispatchers.Main) {
-            mainViewModel.getCoordinates(inputField.editText?.text.toString())
-        }
+        search()
 
         inputField.setEndIconOnClickListener {
             hideKeyboardAndClearFocus(inputField.editText)
-            lifecycleScope.launch(Dispatchers.Main) {
-                mainViewModel.getCoordinates(inputField.editText?.text.toString())
-            }
+            search()
         }
 
         inputField.editText?.setOnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
                 hideKeyboardAndClearFocus(inputField.editText)
+                search()
                 return@setOnKeyListener true
             }
             false
@@ -102,12 +99,11 @@ class MainActivity : AppCompatActivity() {
         }.attach()
     }
 
-//    private fun hideKeyboardAndClearFocus(editText: EditText) {
-//        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//        if (inputMethodManager.isActive) {
-//            inputMethodManager.hideSoftInputFromWindow(binding.root.windowToken, 0)
-//        }
-//    }
+    private fun search(){
+        lifecycleScope.launch(Dispatchers.Main) {
+            mainViewModel.getCoordinates(inputField.editText?.text.toString())
+        }
+    }
 
     private fun hideKeyboardAndClearFocus(editText: EditText?) {
         val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
