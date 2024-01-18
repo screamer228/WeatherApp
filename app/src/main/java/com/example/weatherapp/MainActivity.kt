@@ -1,8 +1,12 @@
 package com.example.weatherapp
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
@@ -13,8 +17,10 @@ import com.example.weatherapp.databinding.ActivityMainBinding
 import com.example.weatherapp.network.RetrofitHelper
 import com.example.weatherapp.network.WeatherApi
 import com.example.weatherapp.viewmodel.MainViewModel
+import com.google.android.material.search.SearchBar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var tabLayout : TabLayout
     private lateinit var viewPager : ViewPager2
+    private lateinit var inputField: TextInputLayout
 
     private lateinit var binding : ActivityMainBinding
 
@@ -38,9 +45,19 @@ class MainActivity : AppCompatActivity() {
 
         tabLayout = binding.tabLayout
         viewPager = binding.viewPager
+        inputField = binding.inputField
 
-        lifecycleScope.launch(Dispatchers.Main) {
-            mainViewModel.getCoordinates("Rostov-on-Don")
+
+        inputField.setEndIconOnClickListener {
+            performSearch()
+        }
+
+        inputField.editText?.setOnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
+                performSearch()
+                return@setOnKeyListener true
+            }
+            false
         }
 
         mainViewModel.coordinatesResult.observe(this, Observer {
@@ -49,15 +66,7 @@ class MainActivity : AppCompatActivity() {
                 mainViewModel.getForecast(it.lat, it.lon)
             }
         })
-
         prepareViewPager()
-    }
-
-    private fun showToast(message: String) {
-        val messageResult = floor(message.toDouble() * 10) / 10
-        val duration = Toast.LENGTH_SHORT // или Toast.LENGTH_LONG для длительного отображения
-        val toast = Toast.makeText(applicationContext, messageResult.toString(), duration)
-        toast.show()
     }
 
     private fun prepareViewPager() {
@@ -73,5 +82,15 @@ class MainActivity : AppCompatActivity() {
             tab, position ->
             tab.text = tabTitleArray[position]
         }.attach()
+    }
+
+    private fun performSearch() {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        if (inputMethodManager.isActive) {
+            inputMethodManager.hideSoftInputFromWindow(binding.root.windowToken, 0)
+        }
+        lifecycleScope.launch(Dispatchers.Main) {
+            mainViewModel.getCoordinates(inputField.editText?.text.toString())
+        }
     }
 }
