@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tabLayout : TabLayout
     private lateinit var viewPager : ViewPager2
     private lateinit var inputField: TextInputLayout
-    private lateinit var mainContainer: ConstraintLayout
 
     private lateinit var binding : ActivityMainBinding
 

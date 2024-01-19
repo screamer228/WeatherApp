@@ -3,12 +3,10 @@ package com.example.weatherapp
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.databinding.ItemForecastBinding
 import com.example.weatherapp.model.forecast.ForecastResult
-import com.example.weatherapp.repository.WeatherRepositoryImpl
 import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_CLEAR
 import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_CLOUDS
 import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_DRIZZLE
