@@ -30,7 +30,7 @@ class ForecastAdapter(private val fragmentContext: Context, private val forecast
 
                     val outputTemp = String.format("%.1f", forecast.temp)
                     binding.itemRecyclerDate.text = "$outputDate"
-                    binding.itemRecyclerTemp.text = "$outputTemp \u2103"
+                    binding.itemRecyclerTemp.text = "$outputTemp ℃"
                     binding.itemRecyclerDescription.text = forecast.description
                     when (forecast.main) {
                         WEATHER_TYPE_CLEAR -> {

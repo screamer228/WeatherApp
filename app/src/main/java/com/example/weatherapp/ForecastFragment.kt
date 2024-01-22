@@ -19,9 +19,7 @@ class ForecastFragment : Fragment() {
 
     private var _binding: FragmentForecastBinding? = null
     private val binding get() = _binding
-
     private val mainViewModel : MainViewModel by activityViewModels()
-
     private lateinit var adapter: ForecastAdapter
 
     override fun onCreateView(
@@ -37,10 +35,8 @@ class ForecastFragment : Fragment() {
         val layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
         binding?.forecastRecycler?.layoutManager = layoutManager
 
-        binding?.forecastRecycler?.visibility = View.INVISIBLE
-        binding?.forecastProgressIndicator?.visibility = View.VISIBLE
-
         mainViewModel.forecastResult.observe(viewLifecycleOwner, Observer {
+
             val forecastResultList = mutableListOf<ForecastResult>()
             it.list.forEach{
                 forecastResultList.add(
@@ -55,8 +51,6 @@ class ForecastFragment : Fragment() {
             adapter = ForecastAdapter(requireContext(), forecastResultList)
             binding?.forecastRecycler?.adapter = adapter
 
-            binding?.forecastProgressIndicator?.visibility = View.GONE
-            binding?.forecastRecycler?.visibility = View.VISIBLE
         })
     }
 

@@ -3,7 +3,8 @@ package com.example.weatherapp.repository
 import android.content.SharedPreferences
 import javax.inject.Inject
 
-class PrefsRepositoryImpl @Inject constructor(private val sharedPreferences: SharedPreferences) : PrefsRepository {
+class PrefsRepositoryImpl @Inject constructor(private val sharedPreferences: SharedPreferences
+) : PrefsRepository {
 
     override fun getCity(): String {
         return sharedPreferences.getString(PREFS_CITY_KEY, PREFS_DEFAULT_VALUE)

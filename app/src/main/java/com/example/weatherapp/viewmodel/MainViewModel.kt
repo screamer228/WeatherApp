@@ -36,18 +36,19 @@ class MainViewModel @Inject constructor(private val weatherRepository: WeatherRe
         prefsRepository.saveDataInPrefs(key, value)
     }
 
-    suspend fun getCoordinates(city: String){
-        withContext(Dispatchers.IO){
+    suspend fun getCoordinates(city: String) {
+        withContext(Dispatchers.IO) {
             val coordinatesApiResult = weatherRepository.getLocationCoordinates(city)
             coordinates.postValue(coordinatesApiResult)
         }
     }
 
-    suspend fun getCurrentWeather(lat: Double, lon: Double){
+    suspend fun getCurrentWeather(lat: Double, lon: Double, callback: () -> Unit){
         withContext(Dispatchers.IO){
             val currentWeatherResult = weatherRepository.getCurrentWeather(lat, lon)
             currentWeather.postValue(currentWeatherResult)
         }
+        callback()
     }
 
     suspend fun getForecast(lat: Double, lon: Double){

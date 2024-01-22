@@ -32,5 +32,4 @@ interface WeatherApi {
         @Query("units") units: String,
         @Query("cnt") count: Int,
     ) : Response<FiveDayForecast>
-
 }

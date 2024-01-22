@@ -78,6 +78,5 @@ class WeatherRepositoryImpl @Inject constructor(
         const val WEATHER_TYPE_DRIZZLE = "Drizzle"
         const val WEATHER_TYPE_SNOW = "Snow"
         const val WEATHER_TYPE_THUNDERSTORM = "Thunderstorm"
-
     }
 }
