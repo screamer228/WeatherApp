@@ -1,10 +1,11 @@
-package com.example.weatherapp
+package com.example.weatherapp.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.weatherapp.R
 import com.example.weatherapp.databinding.ItemForecastBinding
 import com.example.weatherapp.model.forecast.ForecastResult
 import com.example.weatherapp.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_CLEAR

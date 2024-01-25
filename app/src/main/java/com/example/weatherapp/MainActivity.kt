@@ -15,6 +15,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import com.example.weatherapp.adapters.ViewPagerAdapter
 import com.example.weatherapp.databinding.ActivityMainBinding
 import com.example.weatherapp.repository.PrefsRepositoryImpl.Companion.PREFS_CITY_KEY
 import com.example.weatherapp.viewmodel.MainViewModel
@@ -38,7 +39,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var progressIndicator: CircularProgressIndicator
     private lateinit var binding : ActivityMainBinding
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.weatherapp.adapters.ForecastAdapter
 import com.example.weatherapp.databinding.FragmentForecastBinding
 import com.example.weatherapp.model.forecast.ForecastResult
 import com.example.weatherapp.viewmodel.MainViewModel

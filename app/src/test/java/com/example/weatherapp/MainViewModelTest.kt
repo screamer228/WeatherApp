@@ -43,7 +43,9 @@ class MainViewModelTest {
 
         `when`(weatherRepositoryMock.getLocationCoordinates(city)).thenReturn(coordinates)
 
-        assertEquals(coordinates, weatherRepositoryMock.getLocationCoordinates(city))
+        viewModel.getCoordinates(city)
+
+        assertEquals(coordinates, viewModel.coordinatesResult.value)
     }
 
     @Test
@@ -56,7 +58,11 @@ class MainViewModelTest {
 
         `when`(weatherRepositoryMock.getCurrentWeather(lat, lon)).thenReturn(weatherResult)
 
-        assertEquals(weatherResult, weatherRepositoryMock.getCurrentWeather(lat, lon))
+        viewModel.getCurrentWeather(lat, lon){
+
+        }
+
+        assertEquals(weatherResult, viewModel.currentWeatherResult.value)
     }
 
     @Test
@@ -71,7 +77,9 @@ class MainViewModelTest {
 
         `when`(weatherRepositoryMock.getForecast(lat, lon)).thenReturn(forecastResult)
 
-        assertEquals(forecastResult, weatherRepositoryMock.getForecast(lat, lon))
+        viewModel.getForecast(lat, lon)
+
+        assertEquals(forecastResult, viewModel.forecastResult.value)
     }
 
     @Test
