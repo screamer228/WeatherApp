@@ -24,7 +24,7 @@ class WeatherRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCurrentWeather(lat: Double, lon: Double): WeatherResult {
-        val response = weatherApi.getCurrentWeather(lat, lon, APP_ID, METRIC)
+        val response = weatherApi.getCurrentWeather(lat, lon, APP_ID, METRIC, LANG)
         if (response.isSuccessful){
             val weatherResult = response.body()
             return WeatherResult(
@@ -47,7 +47,7 @@ class WeatherRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getForecast(lat: Double, lon: Double): FiveDayForecast {
-        val response = weatherApi.getForecast(lat, lon, APP_ID, METRIC, COUNT)
+        val response = weatherApi.getForecast(lat, lon, APP_ID, COUNT, METRIC, LANG)
         if (response.isSuccessful){
             val forecastResult = response.body()
             return FiveDayForecast(
@@ -70,8 +70,9 @@ class WeatherRepositoryImpl @Inject constructor(
     companion object{
         const val LIMIT = 1
         const val APP_ID = "e6bc672f315ea264a8e0e568a6376e50"
-        const val METRIC = "metric"
         const val COUNT = 9
+        const val METRIC = "metric"
+        const val LANG = "en"
         const val WEATHER_TYPE_CLEAR = "Clear"
         const val WEATHER_TYPE_CLOUDS = "Clouds"
         const val WEATHER_TYPE_RAIN = "Rain"

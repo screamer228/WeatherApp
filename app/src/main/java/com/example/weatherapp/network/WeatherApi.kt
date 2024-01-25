@@ -21,7 +21,8 @@ interface WeatherApi {
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
         @Query("appid") appId: String,
-        @Query("units") units: String
+        @Query("units") units: String,
+        @Query("lang") lang: String
     ) : Response<CurrentWeather>
 
     @GET("data/2.5/forecast")
@@ -29,7 +30,8 @@ interface WeatherApi {
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
         @Query("appid") appId: String,
-        @Query("units") units: String,
         @Query("cnt") count: Int,
+        @Query("units") units: String,
+        @Query("lang") lang: String
     ) : Response<FiveDayForecast>
 }
