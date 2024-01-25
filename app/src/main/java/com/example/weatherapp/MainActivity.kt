@@ -87,7 +87,8 @@ class MainActivity : AppCompatActivity() {
     private fun observers(){
         mainViewModel.coordinatesResult.observe(this, Observer {
             lifecycleScope.launch(Dispatchers.Main) {
-                mainViewModel.getCurrentWeather(it.lat, it.lon){
+                mainViewModel.getCurrentWeather(it.lat, it.lon)
+                {
                     progressIndicator.visibility = INVISIBLE
                     viewPager.visibility = VISIBLE
                     Log.d("visibility check", "observer ---> viewPager became visible")

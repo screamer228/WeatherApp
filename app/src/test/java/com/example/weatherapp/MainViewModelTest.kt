@@ -13,6 +13,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
 
@@ -25,6 +26,9 @@ class MainViewModelTest {
     private val prefsRepositoryMock: PrefsRepository = mock()
 
     private lateinit var viewModel: MainViewModel
+
+    private val keyTestResult = "keyTestValue"
+    private val valueTestValue = "valueTestValue"
 
     @Before
     fun setup(){
@@ -70,4 +74,17 @@ class MainViewModelTest {
         assertEquals(forecastResult, weatherRepositoryMock.getForecast(lat, lon))
     }
 
+    @Test
+    fun `test getCityFromPrefs`(){
+        val city = "testCity"
+        `when`(prefsRepositoryMock.getCity()).thenReturn(city)
+        viewModel.getCityFromPrefs()
+        assertEquals(city, prefsRepositoryMock.getCity())
+    }
+
+    @Test
+    fun `test saveDataInPrefs`(){
+        viewModel.saveDataInPrefs(keyTestResult, valueTestValue)
+        Mockito.verify(prefsRepositoryMock).saveDataInPrefs(keyTestResult, valueTestValue)
+    }
 }

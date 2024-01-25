@@ -70,7 +70,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:paddingHorizontal="12dp"
+                >
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/weather_humidity_value_tv"
@@ -99,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:paddingHorizontal="40dp">
+                android:paddingHorizontal="24dp">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/weather_windSpeed_value_tv"
@@ -127,7 +129,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+
+                android:paddingHorizontal="12dp">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/weather_pressure_value_tv"
