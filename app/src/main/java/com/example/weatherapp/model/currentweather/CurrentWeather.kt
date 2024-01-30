@@ -1,5 +1,10 @@
 package com.example.weatherapp.model.currentweather
 
+import com.example.weatherapp.model.forecast.Coord
+import com.example.weatherapp.model.forecast.Clouds
+import com.example.weatherapp.model.forecast.Weather
+import com.example.weatherapp.model.forecast.Wind
+
 data class CurrentWeather(
     val base: String,
     val clouds: Clouds,

@@ -1,5 +1,6 @@
 package com.example.weatherapp.repository
 
+
 import com.example.weatherapp.model.currentweather.WeatherResult
 import com.example.weatherapp.model.forecast.City
 import com.example.weatherapp.model.forecast.Coord

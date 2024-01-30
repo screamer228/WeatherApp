@@ -4,7 +4,6 @@ import com.example.weatherapp.model.currentweather.WeatherResult
 import com.example.weatherapp.model.forecast.Coord
 import com.example.weatherapp.model.forecast.FiveDayForecast
 
-
 interface WeatherRepository {
 
     suspend fun getLocationCoordinates(city: String) : Coord
