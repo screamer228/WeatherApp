@@ -1,13 +1,13 @@
 package com.example.weatherapp
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.weatherapp.model.currentweather.WeatherResult
-import com.example.weatherapp.model.forecast.City
-import com.example.weatherapp.model.forecast.Coord
-import com.example.weatherapp.model.forecast.FiveDayForecast
-import com.example.weatherapp.repository.PrefsRepository
-import com.example.weatherapp.repository.WeatherRepository
-import com.example.weatherapp.viewmodel.MainViewModel
+import com.example.weatherapp.data.model.currentweather.WeatherResult
+import com.example.weatherapp.data.model.forecast.City
+import com.example.weatherapp.data.model.forecast.Coord
+import com.example.weatherapp.data.model.forecast.FiveDayForecast
+import com.example.weatherapp.data.repository.PrefsRepository
+import com.example.weatherapp.data.repository.WeatherRepository
+import com.example.weatherapp.presentation.viewmodel.MainViewModel
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -31,12 +31,12 @@ class MainViewModelTest {
     private val valueTestValue = "valueTestValue"
 
     @Before
-    fun setup(){
+    fun setup() {
         viewModel = MainViewModel(weatherRepositoryMock, prefsRepositoryMock)
     }
 
     @Test
-    fun `test getCoordinates`() = runBlocking{
+    fun `test getCoordinates`() = runBlocking {
 
         val city = "testCity"
         val coordinates = Coord(1.0, 1.0)
@@ -54,11 +54,18 @@ class MainViewModelTest {
         val lat = 0.0
         val lon = 0.0
 
-        val weatherResult = WeatherResult("main", "description", 1.0, 1, 1.0, 1)
+        val weatherResult = WeatherResult(
+            "main",
+            "description",
+            1.0,
+            1,
+            1.0,
+            1
+        )
 
         `when`(weatherRepositoryMock.getCurrentWeather(lat, lon)).thenReturn(weatherResult)
 
-        viewModel.getCurrentWeather(lat, lon){
+        viewModel.getCurrentWeather(lat, lon) {
 
         }
 
@@ -72,8 +79,15 @@ class MainViewModelTest {
         val lon = 0.0
 
         val forecastResult = FiveDayForecast(
-            City((Coord(1.0, 1.0)), "country", 1, "name", 100, 200, 300,400),
-            1, "cod", emptyList(), 1)
+            City(
+                (Coord(
+                    1.0,
+                    1.0
+                )),
+                "country", 1, "name", 100, 200, 300, 400
+            ),
+            1, "cod", emptyList(), 1
+        )
 
         `when`(weatherRepositoryMock.getForecast(lat, lon)).thenReturn(forecastResult)
 
@@ -83,7 +97,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun `test getCityFromPrefs`(){
+    fun `test getCityFromPrefs`() {
         val city = "testCity"
         `when`(prefsRepositoryMock.getCity()).thenReturn(city)
         viewModel.getCityFromPrefs()
@@ -91,7 +105,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun `test saveDataInPrefs`(){
+    fun `test saveDataInPrefs`() {
         viewModel.saveDataInPrefs(keyTestResult, valueTestValue)
         Mockito.verify(prefsRepositoryMock).saveDataInPrefs(keyTestResult, valueTestValue)
     }

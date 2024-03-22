@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WeatherFragment">
+    tools:context=".presentation.WeatherFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout_main"
@@ -91,7 +91,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Humidity"
+                        android:text="@string/humidity"
                         android:textSize="18sp"/>
                 </LinearLayout>
 
@@ -120,7 +120,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Wind speed"
+                        android:text="@string/wind_speed"
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -150,7 +150,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pressure"
+                        android:text="@string/pressure"
                         android:textSize="18sp"/>
                 </LinearLayout>
 

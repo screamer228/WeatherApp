@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+    <string name="Weather">Weather</string>
+    <string name="Forecast">Forecast</string>
     <string name="plug_text">Please enter the city</string>
+    <string name="search_bar">Search your city</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind_speed">Wind speed</string>
+    <string name="pressure">Pressure</string>
 
 </resources>

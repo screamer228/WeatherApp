@@ -2,12 +2,12 @@ package com.example.weatherapp.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.weatherapp.network.RetrofitHelper
-import com.example.weatherapp.network.WeatherApi
-import com.example.weatherapp.repository.PrefsRepository
-import com.example.weatherapp.repository.PrefsRepositoryImpl
-import com.example.weatherapp.repository.WeatherRepository
-import com.example.weatherapp.repository.WeatherRepositoryImpl
+import com.example.weatherapp.data.network.RetrofitHelper
+import com.example.weatherapp.data.network.WeatherApi
+import com.example.weatherapp.data.repository.PrefsRepository
+import com.example.weatherapp.data.repository.PrefsRepositoryImpl
+import com.example.weatherapp.data.repository.WeatherRepository
+import com.example.weatherapp.data.repository.WeatherRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,13 +31,13 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun providesWeatherRepository(weatherApi: WeatherApi) : WeatherRepository {
+    fun providesWeatherRepository(weatherApi: WeatherApi): WeatherRepository {
         return WeatherRepositoryImpl(weatherApi)
     }
 
     @Provides
     @Singleton
-    fun providesRequestsApi() : WeatherApi{
+    fun providesRequestsApi(): WeatherApi {
         return RetrofitHelper.getInstance().create(WeatherApi::class.java)
     }
 }
