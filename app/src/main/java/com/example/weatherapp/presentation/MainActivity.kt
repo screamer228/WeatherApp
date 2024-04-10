@@ -10,7 +10,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.example.weatherapp.R
@@ -24,6 +23,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -84,17 +84,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observers() {
-        mainViewModel.coordinatesResult.observe(this, Observer {
+        mainViewModel.coordinatesResult.observe(this) {
             lifecycleScope.launch(Dispatchers.Main) {
-                mainViewModel.getCurrentWeather(it.lat, it.lon)
-                {
-                    progressIndicator.visibility = INVISIBLE
-                    viewPager.visibility = VISIBLE
-                    screenDataValidation()
-                }
-                mainViewModel.getForecast(it.lat, it.lon)
+                async { mainViewModel.getCurrentWeather(it.lat, it.lon) }.await()
+                async { mainViewModel.getForecast(it.lat, it.lon) }.await()
+                progressIndicator.visibility = INVISIBLE
+                viewPager.visibility = VISIBLE
+                screenDataValidation()
             }
-        })
+        }
     }
 
     private fun prepareViewPager() {
@@ -115,9 +113,8 @@ class MainActivity : AppCompatActivity() {
         viewPager.visibility = INVISIBLE
         plug.visibility = INVISIBLE
         progressIndicator.visibility = VISIBLE
-        lifecycleScope.launch(Dispatchers.Main) {
-            mainViewModel.getCoordinates(inputField.editText?.text.toString())
-        }
+
+        mainViewModel.getCoordinates(inputField.editText?.text.toString())
     }
 
     private fun screenDataValidation() {

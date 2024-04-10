@@ -3,6 +3,7 @@ package com.example.weatherapp.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.data.model.currentweather.WeatherResult
 import com.example.weatherapp.data.model.forecast.Coord
 import com.example.weatherapp.data.model.forecast.FiveDayForecast
@@ -10,6 +11,7 @@ import com.example.weatherapp.data.repository.PrefsRepository
 import com.example.weatherapp.data.repository.WeatherRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -36,19 +38,18 @@ class MainViewModel @Inject constructor(
         prefsRepository.saveDataInPrefs(key, value)
     }
 
-    suspend fun getCoordinates(city: String) {
-        withContext(Dispatchers.IO) {
+    fun getCoordinates(city: String) {
+        viewModelScope.launch(Dispatchers.IO) {
             val coordinatesApiResult = weatherRepository.getLocationCoordinates(city)
             coordinates.postValue(coordinatesApiResult)
         }
     }
 
-    suspend fun getCurrentWeather(lat: Double, lon: Double, callback: () -> Unit) {
+    suspend fun getCurrentWeather(lat: Double, lon: Double) {
         withContext(Dispatchers.IO) {
             val currentWeatherResult = weatherRepository.getCurrentWeather(lat, lon)
             currentWeather.postValue(currentWeatherResult)
         }
-        callback()
     }
 
     suspend fun getForecast(lat: Double, lon: Double) {
