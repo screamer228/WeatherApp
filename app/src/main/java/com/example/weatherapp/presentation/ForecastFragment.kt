@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.presentation.adapters.ForecastAdapter
@@ -36,7 +35,7 @@ class ForecastFragment : Fragment() {
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
         binding?.forecastRecycler?.layoutManager = layoutManager
 
-        mainViewModel.forecastResult.observe(viewLifecycleOwner, Observer {
+        mainViewModel.forecastResult.observe(viewLifecycleOwner) { it ->
 
             val forecastResultList = mutableListOf<ForecastResult>()
             it.list.forEach {
@@ -52,7 +51,7 @@ class ForecastFragment : Fragment() {
             adapter = ForecastAdapter(requireContext(), forecastResultList)
             binding?.forecastRecycler?.adapter = adapter
 
-        })
+        }
     }
 
     companion object {

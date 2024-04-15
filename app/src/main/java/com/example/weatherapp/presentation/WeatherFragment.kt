@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.FragmentWeatherBinding
 import com.example.weatherapp.data.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_CLEAR
@@ -37,21 +36,24 @@ class WeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainViewModel.currentWeatherResult.observe(viewLifecycleOwner, Observer {
+        mainViewModel.currentWeatherResult.observe(viewLifecycleOwner) {
             val outputTemp = String.format("%.1f", it.temp)
             val outputWindSpeed = String.format("%.1f", it.windSpeed)
-            binding?.weatherTempValueTv?.text = "$outputTemp ℃"
+            binding?.weatherTempValueTv?.text = getString(R.string.Celsius, outputTemp)
             binding?.weatherDescriptionValueTv?.text = it.description
             binding?.weatherHumidityValueTv?.text = "${it.humidity} %"
-            binding?.weatherWindSpeedValueTv?.text = "$outputWindSpeed m/s"
+            binding?.weatherWindSpeedValueTv?.text =
+                getString(R.string.metres_per_sec, outputWindSpeed)
             binding?.weatherPressureValueTv?.text = it.pressure.toString()
 
-            when (it.main) {
+            val weatherType = it.main
+
+            when (weatherType) {
                 WEATHER_TYPE_CLEAR -> {
                     binding?.weatherImage?.setImageDrawable(
                         ContextCompat.getDrawable(
                             requireContext(),
-                            R.drawable.clear_sky
+                            WeatherType.Clear.imageId
                         )
                     )
                 }
@@ -60,7 +62,7 @@ class WeatherFragment : Fragment() {
                     binding?.weatherImage?.setImageDrawable(
                         ContextCompat.getDrawable(
                             requireContext(),
-                            R.drawable.clouds
+                            WeatherType.Clouds.imageId
                         )
                     )
                 }
@@ -69,7 +71,7 @@ class WeatherFragment : Fragment() {
                     binding?.weatherImage?.setImageDrawable(
                         ContextCompat.getDrawable(
                             requireContext(),
-                            R.drawable.rain
+                            WeatherType.Rain.imageId
                         )
                     )
                 }
@@ -78,7 +80,7 @@ class WeatherFragment : Fragment() {
                     binding?.weatherImage?.setImageDrawable(
                         ContextCompat.getDrawable(
                             requireContext(),
-                            R.drawable.snow
+                            WeatherType.Snow.imageId
                         )
                     )
                 }
@@ -87,7 +89,7 @@ class WeatherFragment : Fragment() {
                     binding?.weatherImage?.setImageDrawable(
                         ContextCompat.getDrawable(
                             requireContext(),
-                            R.drawable.thunderstorm
+                            WeatherType.Thunderstorm.imageId
                         )
                     )
                 }
@@ -96,12 +98,12 @@ class WeatherFragment : Fragment() {
                     binding?.weatherImage?.setImageDrawable(
                         ContextCompat.getDrawable(
                             requireContext(),
-                            R.drawable.fog
+                            WeatherType.Fog.imageId
                         )
                     )
                 }
             }
-        })
+        }
     }
 
     companion object {

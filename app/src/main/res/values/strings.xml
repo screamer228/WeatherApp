@@ -7,5 +7,7 @@
     <string name="humidity">Humidity</string>
     <string name="wind_speed">Wind speed</string>
     <string name="pressure">Pressure</string>
+    <string name="Celsius">%1$s ℃</string>
+    <string name="metres_per_sec">%1$s m/s</string>
 
 </resources>

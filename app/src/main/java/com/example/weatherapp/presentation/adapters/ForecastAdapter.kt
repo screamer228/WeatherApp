@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.weatherapp.R
 import com.example.weatherapp.databinding.ItemForecastBinding
 import com.example.weatherapp.data.model.forecast.ForecastResult
 import com.example.weatherapp.data.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_CLEAR
@@ -14,6 +13,7 @@ import com.example.weatherapp.data.repository.WeatherRepositoryImpl.Companion.WE
 import com.example.weatherapp.data.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_RAIN
 import com.example.weatherapp.data.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_SNOW
 import com.example.weatherapp.data.repository.WeatherRepositoryImpl.Companion.WEATHER_TYPE_THUNDERSTORM
+import com.example.weatherapp.presentation.WeatherType
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -35,12 +35,15 @@ class ForecastAdapter(
             binding.itemRecyclerDate.text = "$outputDate"
             binding.itemRecyclerTemp.text = "$outputTemp ℃"
             binding.itemRecyclerDescription.text = forecast.description
-            when (forecast.main) {
+
+            val weatherType = forecast.main
+
+            when (weatherType) {
                 WEATHER_TYPE_CLEAR -> {
                     binding.itemRecyclerImage.setImageDrawable(
                         ContextCompat.getDrawable(
                             context,
-                            R.drawable.clear_sky
+                            WeatherType.Clear.imageId
                         )
                     )
                 }
@@ -49,7 +52,7 @@ class ForecastAdapter(
                     binding.itemRecyclerImage.setImageDrawable(
                         ContextCompat.getDrawable(
                             context,
-                            R.drawable.clouds
+                            WeatherType.Clouds.imageId
                         )
                     )
                 }
@@ -58,7 +61,7 @@ class ForecastAdapter(
                     binding.itemRecyclerImage.setImageDrawable(
                         ContextCompat.getDrawable(
                             context,
-                            R.drawable.rain
+                            WeatherType.Rain.imageId
                         )
                     )
                 }
@@ -67,7 +70,7 @@ class ForecastAdapter(
                     binding.itemRecyclerImage.setImageDrawable(
                         ContextCompat.getDrawable(
                             context,
-                            R.drawable.snow
+                            WeatherType.Snow.imageId
                         )
                     )
                 }
@@ -76,7 +79,7 @@ class ForecastAdapter(
                     binding.itemRecyclerImage.setImageDrawable(
                         ContextCompat.getDrawable(
                             context,
-                            R.drawable.thunderstorm
+                            WeatherType.Thunderstorm.imageId
                         )
                     )
                 }
@@ -85,7 +88,7 @@ class ForecastAdapter(
                     binding.itemRecyclerImage.setImageDrawable(
                         ContextCompat.getDrawable(
                             context,
-                            R.drawable.fog
+                            WeatherType.Fog.imageId
                         )
                     )
                 }
